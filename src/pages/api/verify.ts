@@ -71,6 +71,7 @@ export default function handler(
           placeId: process.env.NEXT_PUBLIC_DEMO_PLACE_ID,
           title: actionData.title,
           body: actionData.body,
+          rating: actionData.rating,
           ...reqBody
       });
 

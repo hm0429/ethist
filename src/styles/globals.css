@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.star-rating {
+    direction: rtl; /* 逆順に並べる */
+    font-size: 0; /* ホワイトスペースを削除するためにフォントサイズを0に */
+  }
+  
+  .star-rating > input {
+    display: none; /* ラジオボタンを非表示に */
+  }
+  
+  .star-rating > label {
+    font-size: 24px; /* 星のサイズ */
+    color: #ddd; /* デフォルトの星の色 */
+    cursor: pointer;
+  }
+  
+  .star-rating > input:checked ~ label {
+    color: #ffc700; /* 選択した星の色 */
+  }
+  
+  .star-rating > input:hover ~ label,
+  .star-rating > label:hover {
+    color: #ffdb00; /* ホバーした星の色 */
+  }
