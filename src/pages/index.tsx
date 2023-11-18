@@ -2,8 +2,7 @@ import { CredentialType, IDKitWidget } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
 import type { VerifyReply } from "./api/verify";
 
-const PLACE_ID = "42"
-const ACTION_NAME = `${process.env.NEXT_PUBLIC_WLD_ACTION_NAME}-${PLACE_ID}`
+const ACTION_NAME = `${process.env.NEXT_PUBLIC_WLD_ACTION_NAME}-${process.env.NEXT_PUBLIC_DEMO_PLACE_ID}`
 
 export default function Home() {
 	const onSuccess = (result: ISuccessResult) => {
