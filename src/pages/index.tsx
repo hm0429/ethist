@@ -37,7 +37,7 @@ export default function Home() {
 	return (
 		<div>
 			<div className="flex flex-col items-center justify-center align-middle h-screen">
-				<p className="text-2xl mb-5">World ID Cloud Template</p>
+				<p className="text-2xl mb-5">HomoSapienSays</p>
 				<IDKitWidget
 					action={process.env.NEXT_PUBLIC_WLD_ACTION_NAME!}
 					app_id={process.env.NEXT_PUBLIC_WLD_APP_ID!}
@@ -48,7 +48,7 @@ export default function Home() {
 				>
 					{({ open }) =>
 						<button className="border border-black rounded-md" onClick={open}>
-							<div className="mx-3 my-1">Verify with World ID</div>
+							<div className="mx-3 my-1">Review with World ID</div>
 						</button>
 					}
 				</IDKitWidget>
