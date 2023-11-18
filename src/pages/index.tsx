@@ -2,6 +2,9 @@ import { CredentialType, IDKitWidget } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
 import type { VerifyReply } from "./api/verify";
 
+const PLACE_ID = "42"
+const ACTION_NAME = `${process.env.NEXT_PUBLIC_WLD_ACTION_NAME}-${PLACE_ID}`
+
 export default function Home() {
 	const onSuccess = (result: ISuccessResult) => {
 		// This is where you should perform frontend actions once a user has been verified, such as redirecting to a new page
@@ -15,7 +18,7 @@ export default function Home() {
 			nullifier_hash: result.nullifier_hash,
 			proof: result.proof,
 			credential_type: result.credential_type,
-			action: process.env.NEXT_PUBLIC_WLD_ACTION_NAME,
+			action: ACTION_NAME,
 			signal: "",
 		};
 		console.log("Sending proof to backend for verification:\n", JSON.stringify(reqBody)) // Log the proof being sent to our backend for visibility
@@ -39,7 +42,7 @@ export default function Home() {
 			<div className="flex flex-col items-center justify-center align-middle h-screen">
 				<p className="text-2xl mb-5">HomoSapienSays</p>
 				<IDKitWidget
-					action={process.env.NEXT_PUBLIC_WLD_ACTION_NAME!}
+					action={ACTION_NAME!}
 					app_id={process.env.NEXT_PUBLIC_WLD_APP_ID!}
 					onSuccess={onSuccess}
 					handleVerify={handleProof}
