@@ -61,35 +61,45 @@ export default function Home() {
 	};
 
 	return (
-		<div>
-			<div className="flex flex-col items-center justify-center align-middle h-screen">
-				<p className="text-2xl mb-5">HomoSapienSays</p>
-						<input
-							ref={titleRef}
-							placeholder="title"
-							className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-						/>
-						<input
-							ref={bodyRef}
-							placeholder="body"
-							className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-						/>
-
-				<IDKitWidget
-					action={ACTION_NAME!}
-					app_id={process.env.NEXT_PUBLIC_WLD_APP_ID!}
-					onSuccess={onSuccess}
-					handleVerify={handleProof}
-					credential_types={[CredentialType.Orb, CredentialType.Phone]}
-					autoClose
-				>
-					{({ open }) =>
-						<button className="border border-black rounded-md" onClick={open}>
-							<div className="mx-3 my-1">Review with World ID</div>
-						</button>
-					}
-				</IDKitWidget>
-			</div>
-		</div>
+<div>
+  <div className="flex flex-col items-center justify-center align-middle min-h-screen bg-gray-100 text-gray-800">
+    <div className="max-w-md w-full space-y-8 p-10 bg-white shadow-md rounded-xl">
+      <div className="text-center">
+        <p className="text-4xl font-extrabold mb-4">HomoSapienSays</p>
+      </div>
+      <form className="space-y-6" action="#" method="POST">
+        <input
+          ref={titleRef}
+          placeholder="Title"
+          className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500 transition-colors"
+        />
+        <textarea
+          ref={bodyRef}
+          placeholder="Body"
+          rows={4}
+          className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500 transition-colors"
+        ></textarea>
+        <IDKitWidget
+          action={ACTION_NAME!}
+          app_id={process.env.NEXT_PUBLIC_WLD_APP_ID!}
+          onSuccess={onSuccess}
+          handleVerify={handleProof}
+          credential_types={[CredentialType.Orb, CredentialType.Phone]}
+          autoClose
+        >
+          {({ open }) =>
+            <button
+              type="button" 
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+              onClick={open}
+            >
+              Review with World ID
+            </button>
+          }
+        </IDKitWidget>
+      </form>
+    </div>
+  </div>
+</div>
 	);
 }
