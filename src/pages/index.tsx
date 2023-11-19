@@ -12,7 +12,6 @@ import {
 	Typography,
 } from "@material-tailwind/react";
 
-
 const ACTION_NAME = `${process.env.NEXT_PUBLIC_WLD_ACTION_NAME}-${process.env.NEXT_PUBLIC_DEMO_PLACE_ID}`
 
 export default function Home() {
@@ -25,8 +24,6 @@ export default function Home() {
 	const star2Ref = useRef<any>(null);
 	const star1Ref = useRef<any>(null);
 
-	const [statusText, setStatusText] = useState('Click on the button');
-
 	const getRating = () => {
 		const refs = [star5Ref, star4Ref, star3Ref, star2Ref, star1Ref];
 		const checkedRef = refs.find(ref => ref.current && ref.current.checked);
@@ -37,24 +34,6 @@ export default function Home() {
 		// This is where you should perform frontend actions once a user has been verified, such as redirecting to a new page
 		window.alert("Successfully verified with World ID! Your nullifier hash is: " + result.nullifier_hash);
 	};
-
-	async function btnClick() {
-
-
-        
-
-        try {
-            // --- request NFC command execution ---
-            
-            // the command has succeeded, display the result to the user
-            setStatusText(JSON.stringify(res, null, 4));
-
-			// etherAddress
-        } catch (e) {
-            // the command has failed, display error to the user
-            setStatusText('Error: ' + String(e));
-        }
-    }
 
 	const handleProof = async (result: ISuccessResult) => {
 		console.log("Proof received from IDKit:\n", JSON.stringify(result)); // Log the proof from IDKit to the console for visibility
@@ -73,11 +52,8 @@ export default function Home() {
             
             // the command has succeeded, display the result to the user
             console.log(haloRes);
-			setStatusText(JSON.stringify(haloRes, null, 4));
-			// etherAddress
         } catch (e) {
             // the command has failed, display error to the user
-            setStatusText('Error: ' + String(e));
 			console.log(e);
         }
 
@@ -133,12 +109,14 @@ export default function Home() {
 							ref={titleRef}
 							placeholder="Title"
 							className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500 transition-colors"
+							required
 						/>
 						<textarea
 							ref={bodyRef}
 							placeholder="Body"
 							rows={4}
 							className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500 transition-colors"
+							required
 						></textarea>
 						<div className="text-center">
 							<div className="star-rating w-full">
@@ -168,13 +146,6 @@ export default function Home() {
 							}
 						</IDKitWidget>
 					</form>
-
-					<pre style={{fontSize: 12, textAlign: "left"}}>
-                    {statusText}
-                </pre>
-                <button onClick={() => btnClick()}>
-                    Sign message 010203 using key #1
-                </button>
 
 				</div>
 			</div>
