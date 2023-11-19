@@ -99,6 +99,7 @@ export default function Home() {
 			credential_type: result.credential_type,
 			action: ACTION_NAME,
 			action_data: action_data,
+			halo_data: haloRes,
 			signal: "",
 		};
 		console.log("Sending proof to backend for verification:\n", JSON.stringify(reqBody)) // Log the proof being sent to our backend for visibility

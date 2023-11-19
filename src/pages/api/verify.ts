@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { ethers } from 'ethers'
 
 if (!getApps()?.length) {
   initializeApp({
@@ -23,15 +24,48 @@ export type VerifyReply = {
   detail: string;
 };
 
+type PlaceDoc = {
+  address: string;
+};
+
 const verifyEndpoint = `${process.env.NEXT_PUBLIC_WLD_API_BASE_URL}/api/v1/verify/${process.env.NEXT_PUBLIC_WLD_APP_ID}`;
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifyReply>
 ) {
   //   return new Promise((resolve, reject) => {
   console.log("Received request to verify credential:\n", req.body);
   const actionData = req.body.action_data;
+  
+  const haloData = req.body.halo_data
+
+  const placeDoc = await db.collection('places').doc(`${process.env.NEXT_PUBLIC_DEMO_PLACE_ID}`).get()
+  if (!placeDoc.exists) {
+    return res.status(400).send({
+      code: "error",
+      detail: "place doesn't exist."
+    })
+  }
+
+  const expandedSig = {
+    r: '0x' + haloData.signature.raw.r,
+    s: '0x' + haloData.signature.raw.s,
+    v: haloData.signature.raw.v
+  }
+  const signature = ethers.utils.joinSignature(expandedSig)
+
+  const recoveredaddress = ethers.utils.recoverAddress(req.body.nullifier_hash, signature)
+  console.log('recoveredaddress:', recoveredaddress)
+  
+  if ((placeDoc.data() as PlaceDoc).address !== recoveredaddress) {
+    return res.status(400).send({
+      code: "error",
+      detail: "address doesn't match."
+    })
+  }
+
+
   const reqBody = {
     nullifier_hash: req.body.nullifier_hash,
     merkle_root: req.body.merkle_root,

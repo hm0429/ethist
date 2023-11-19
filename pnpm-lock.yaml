@@ -30,7 +30,7 @@ dependencies:
     specifier: 13.3.4
     version: 13.3.4(eslint@8.39.0)(typescript@5.0.4)
   ethers:
-    specifier: '5'
+    specifier: ^5.7.2
     version: 5.7.2
   firebase:
     specifier: ^10.6.0
