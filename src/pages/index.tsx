@@ -1,7 +1,9 @@
 import { CredentialType, IDKitWidget } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
 import type { VerifyReply } from "./api/verify";
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import {execHaloCmdWeb} from '@arx-research/libhalo/api/web.js';
+
 import {
 	Card,
 	Input,
@@ -23,6 +25,8 @@ export default function Home() {
 	const star2Ref = useRef<any>(null);
 	const star1Ref = useRef<any>(null);
 
+	const [statusText, setStatusText] = useState('Click on the button');
+
 	const getRating = () => {
 		const refs = [star5Ref, star4Ref, star3Ref, star2Ref, star1Ref];
 		const checkedRef = refs.find(ref => ref.current && ref.current.checked);
@@ -34,8 +38,48 @@ export default function Home() {
 		window.alert("Successfully verified with World ID! Your nullifier hash is: " + result.nullifier_hash);
 	};
 
+	async function btnClick() {
+
+
+        
+
+        try {
+            // --- request NFC command execution ---
+            
+            // the command has succeeded, display the result to the user
+            setStatusText(JSON.stringify(res, null, 4));
+
+			// etherAddress
+        } catch (e) {
+            // the command has failed, display error to the user
+            setStatusText('Error: ' + String(e));
+        }
+    }
+
 	const handleProof = async (result: ISuccessResult) => {
 		console.log("Proof received from IDKit:\n", JSON.stringify(result)); // Log the proof from IDKit to the console for visibility
+
+        let halocmd = {
+            name: "sign",
+            keyNo: 1,
+            digest: result.nullifier_hash.slice(2)
+        };
+
+		let haloRes;
+		haloRes = await execHaloCmdWeb(halocmd);
+
+        try {
+            // --- request NFC command execution ---
+            
+            // the command has succeeded, display the result to the user
+            console.log(haloRes);
+			setStatusText(JSON.stringify(haloRes, null, 4));
+			// etherAddress
+        } catch (e) {
+            // the command has failed, display error to the user
+            setStatusText('Error: ' + String(e));
+			console.log(e);
+        }
 
 		const rating = getRating();
 		if (!titleRef.current || !bodyRef.current || !rating) {
@@ -79,7 +123,10 @@ export default function Home() {
 				<div className="max-w-md w-full space-y-8 p-10 bg-white shadow-md rounded-xl">
 					<div className="text-center">
 						<p className="text-4xl font-extrabold mb-4">HomoSapienSays</p>
+						<p>Please leave a review for THE KEDI HOTEL!</p>
+
 					</div>
+
 					<form className="space-y-6" action="#" method="POST">
 						<input
 							ref={titleRef}
@@ -96,7 +143,7 @@ export default function Home() {
 							<div className="star-rating w-full">
 								<input type="radio" id="star5" name="rating" value="5" ref={star5Ref} /><label htmlFor="star5" title="5 stars">&#9733;</label>
 								<input type="radio" id="star4" name="rating" value="4" ref={star4Ref} /><label htmlFor="star4" title="4 stars">&#9733;</label>
-								<input type="radio" id="star3" name="rating" value="3" ref={star3Ref} checked/><label htmlFor="star3" title="3 stars">&#9733;</label>
+								<input type="radio" id="star3" name="rating" value="3" ref={star3Ref} defaultChecked/><label htmlFor="star3" title="3 stars">&#9733;</label>
 								<input type="radio" id="star2" name="rating" value="2" ref={star2Ref} /><label htmlFor="star2" title="2 stars">&#9733;</label>
 								<input type="radio" id="star1" name="rating" value="1" ref={star1Ref} /><label htmlFor="star1" title="1 star">&#9733;</label>
 							</div>
@@ -120,6 +167,14 @@ export default function Home() {
 							}
 						</IDKitWidget>
 					</form>
+
+					<pre style={{fontSize: 12, textAlign: "left"}}>
+                    {statusText}
+                </pre>
+                <button onClick={() => btnClick()}>
+                    Sign message 010203 using key #1
+                </button>
+
 				</div>
 			</div>
 		</div>
