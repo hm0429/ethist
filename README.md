@@ -14,3 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## live demo
 
 https://homosapiensays.vercel.app/
+
+## slide
+
+https://docs.google.com/presentation/d/1AqvKqYBK4CkMgSB50AmeeYo1fXnpCbMk-0VlATM79CI/edit?usp=sharing
