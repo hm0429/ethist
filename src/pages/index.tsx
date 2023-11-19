@@ -43,6 +43,20 @@ export default function Home() {
 
 	};
 
+	async function permissionCheck() {
+		let halocmd = {
+            name: "sign",
+            keyNo: 1,
+            message: "010203"
+        };
+		let haloRes;
+		try {
+			haloRes = await execHaloCmdWeb(halocmd);
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 	const handleProof = async (result: ISuccessResult) => {
 		console.log("Proof received from IDKit:\n", JSON.stringify(result)); // Log the proof from IDKit to the console for visibility
 
@@ -168,6 +182,9 @@ export default function Home() {
 						</IDKitWidget>
 					</form>
 					<Reviews />
+					<button onClick={() => permissionCheck()}>
+                    Permission Check
+                	</button>
 				</div>
 			</div>
 		</div>
