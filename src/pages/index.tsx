@@ -2,6 +2,8 @@ import { CredentialType, IDKitWidget } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
 import type { VerifyReply } from "./api/verify";
 import { useRef, useState } from 'react';
+
+//@ts-ignore
 import {execHaloCmdWeb} from '@arx-research/libhalo/api/web.js';
 
 import {
