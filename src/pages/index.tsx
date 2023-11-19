@@ -14,6 +14,8 @@ import {
 	Typography,
 } from "@material-tailwind/react";
 
+import Reviews from '../components/Reviews';
+
 const ACTION_NAME = `${process.env.NEXT_PUBLIC_WLD_ACTION_NAME}-${process.env.NEXT_PUBLIC_DEMO_PLACE_ID}`
 
 export default function Home() {
@@ -152,7 +154,7 @@ export default function Home() {
 							}
 						</IDKitWidget>
 					</form>
-
+					<Reviews />
 				</div>
 			</div>
 		</div>
